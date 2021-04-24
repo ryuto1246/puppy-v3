@@ -13,7 +13,7 @@
     constructor(input) {
       this.abbreviation = input.Abbreviation;
       this.company = input.Company;
-      this.modelNumber = input.Model_number;
+      this.modelNumber = input.Model_Number;
       this.capacity = input.Capacity;
     }
   }
@@ -27,7 +27,7 @@
       this.arrTime = input.Arr_time.split(":").map(i => parseInt(i, 10));
       this.aircraft = [input.Aircraft_1, input.Aircraft_2, input.Aircraft_3].filter(Boolean).map(el => aircrafts.find(aircraft => aircraft.abbreviation === el));
       this.cycle = {c: input.Cycle||1, n: input.Number-1||0};
-      if(input.indirect) this.codeShare = {company: input.Codeshare_company, number: input.Codeshare_number, aircraft: input.Codeshare_aircraft};
+      if(input.Codeshare_company) this.codeShare = {company: input.Codeshare_company, number: input.Codeshare_number, aircraft: input.Codeshare_Aircraft};
       if(input.indirect) this.indirect = input.indirect;
 
       if(this.arrTime[0] >= 24) { this.arrTime[0] -= 24; this.arrTime.push("翌"); }
@@ -37,7 +37,7 @@
   const airports = input.airports.map(airport => new Airport(airport));
   const aircrafts = input.aircrafts.map(aircraft => new Aircraft(aircraft));
   const flights = input.timetable.map(flight => new Flight(flight));
-  
+  console.log(flights);
   const exp_arr = flights.map(flight => {
     return `
     <li>
@@ -54,8 +54,10 @@
         </div>
       </div>
       <div class="notes">
-        <p class="codeshare">Sky Connect Air コードシェア便（Puppy Air機材)</p>
-        <p class="aircraft">Boeing 777-300ER(500席) / Airbus 350-900(200席)</p>
+        ${flight.codeShare ? '<p class="codeshare">Sky Connect Air コードシェア便（' + flight.codeShare.aircraft +'機運行)</p>' : ""}
+        <p class="aircraft">${
+          flight.aircraft.map(i => `${i.company} ${i.modelNumber} (${i.capacity}席)`).reduce((acc, item) => acc + " / " + item)
+        }</p>
       </div>
     </li>
     `
