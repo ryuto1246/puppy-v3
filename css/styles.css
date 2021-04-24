@@ -43,19 +43,17 @@ main ul {
 
 main ul li {
   width: 90vw;
-  margin: 0 auto;
+  margin: 15px auto;
   -webkit-box-shadow: 0 0 6px #00000050;
           box-shadow: 0 0 6px #00000050;
   list-style: none;
 }
 
 main ul li .flight-info {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 6rem 1fr 2rem 1fr;
+      grid-template-columns: 6rem 1fr 2rem 1fr;
 }
 
 main ul li .flight-info .flight-number {
@@ -69,7 +67,6 @@ main ul li .flight-info .flight-number {
       -ms-flex-align: center;
           align-items: center;
   border-right: .1rem solid #DBDBDB;
-  width: 6rem;
   font-size: .8rem;
 }
 
@@ -84,7 +81,7 @@ main ul li .flight-info .airports p {
 
 main ul li .flight-info .airports p.airport-name {
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 main ul li .flight-info .airports p.airport-time {
@@ -99,7 +96,6 @@ main ul li .flight-info .arrow {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 0 1rem;
 }
 
 main ul li .flight-info .arrow img {
@@ -115,12 +111,16 @@ main ul li .flight-info .space {
 
 main ul li .notes {
   border-top: .1rem solid #DBDBDB;
-  padding: 10px 0 20px;
+  padding: 10px 0 13px;
   text-align: center;
   font-size: .7rem;
 }
 
 main ul li .notes p {
   margin: .2rem;
+}
+
+main ul li .notes p.codeshare {
+  font-weight: 600;
 }
 /*# sourceMappingURL=styles.css.map */

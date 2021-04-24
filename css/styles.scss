@@ -18,19 +18,18 @@ main {
     padding: 0;
     li {
       width: 90vw;
-      margin: 0 auto;
+      margin: 15px auto;
       box-shadow: 0 0 6px #00000050;
       list-style: none;
 
       .flight-info {
-        display: flex;
-        align-items: stretch;
+        display: grid;
+        grid-template-columns: 6rem 1fr 2rem 1fr;
         .flight-number {
           display: flex;
           justify-content: center;
           align-items: center;
           border-right: .1rem solid #DBDBDB;
-          width: 6rem;
           font-size: .8rem;
         }
         .airports {
@@ -40,7 +39,7 @@ main {
             text-align: center;
             &.airport-name {
               font-weight: 800;
-              font-size: 1.1rem;
+              font-size: 1rem;
             }
             &.airport-time {
               font-weight: 200;
@@ -51,7 +50,6 @@ main {
         .arrow {
           display: flex;
           align-items: center;
-          margin: 0 1rem;
           img {
             width: 2rem;
             height: 2rem;
@@ -64,10 +62,13 @@ main {
 
       .notes {
         border-top: .1rem solid #DBDBDB;
-        padding: 10px 0 20px;
+        padding: 10px 0 13px;
         text-align: center;
         font-size: .7rem;
-        p { margin: .2rem; }
+        p { 
+          margin: .2rem;
+          &.codeshare {font-weight: 600;}
+        }
       }
     }
   }

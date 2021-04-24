@@ -29,11 +29,39 @@
       this.cycle = {c: input.Cycle||1, n: input.Number-1||0};
       if(input.indirect) this.codeShare = {company: input.Codeshare_company, number: input.Codeshare_number, aircraft: input.Codeshare_aircraft};
       if(input.indirect) this.indirect = input.indirect;
+
+      if(this.arrTime[0] >= 24) { this.arrTime[0] -= 24; this.arrTime.push("翌"); }
     }
   }
 
   const airports = input.airports.map(airport => new Airport(airport));
   const aircrafts = input.aircrafts.map(aircraft => new Aircraft(aircraft));
   const flights = input.timetable.map(flight => new Flight(flight));
+  
+  const exp_arr = flights.map(flight => {
+    return `
+    <li>
+      <div class="flight-info">
+        <div class="flight-number">PPY${("000" + flight.flightNumber).slice(-3)}</div>
+        <div class="airports">
+          <p class="airport-name">${flight.depAirport.japanese}</p>
+          <p class="airport-time">${`${("00" + flight.depTime[0]).slice(-2)}:${("00" + flight.depTime[1]).slice(-2)}`}</p>
+        </div>
+        <div class="arrow"><img src="./imgs/right.svg" alt="→"></div>
+        <div class="airports">
+          <p class="airport-name">${flight.arrAirport.japanese}</p>
+          <p class="airport-time">${`${flight.arrTime[2] || ""}${("00" + flight.arrTime[0]).slice(-2)}:${("00" + flight.arrTime[1]).slice(-2)}`}</p>
+        </div>
+      </div>
+      <div class="notes">
+        <p class="codeshare">Sky Connect Air コードシェア便（Puppy Air機材)</p>
+        <p class="aircraft">Boeing 777-300ER(500席) / Airbus 350-900(200席)</p>
+      </div>
+    </li>
+    `
+  });
+  
+  const exp_txt = exp_arr.reduce((acc, item) => acc + item);
+  document.getElementById("list").innerHTML = exp_txt;
 }
 )();
