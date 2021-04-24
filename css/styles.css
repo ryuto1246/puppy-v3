@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "Source Han Sans JP";
+  font-weight: 400;
+  src: url("../fonts/SourceHanSansJP-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Source Han Sans JP";
+  font-weight: 600;
+  src: url("../fonts/SourceHanSansJP-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Source Han Sans JP";
+  font-weight: 800;
+  src: url("../fonts/SourceHanSansJP-Heavy.otf") format("opentype");
+}
+
+html {
+  font-size: 3.7vw;
+}
+
+body {
+  font-family: "Source Han Sans JP", sans-serif;
+}
+
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main ul {
+  padding: 0;
+}
+
+main ul li {
+  width: 90vw;
+  margin: 0 auto;
+  -webkit-box-shadow: 0 0 6px #00000050;
+          box-shadow: 0 0 6px #00000050;
+  list-style: none;
+}
+
+main ul li .flight-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+main ul li .flight-info .flight-number {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-right: .1rem solid #DBDBDB;
+  width: 6rem;
+  font-size: .8rem;
+}
+
+main ul li .flight-info .airports {
+  padding: 1rem 0;
+}
+
+main ul li .flight-info .airports p {
+  margin: 0;
+  text-align: center;
+}
+
+main ul li .flight-info .airports p.airport-name {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+main ul li .flight-info .airports p.airport-time {
+  font-weight: 200;
+  font-size: .8rem;
+}
+
+main ul li .flight-info .arrow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 1rem;
+}
+
+main ul li .flight-info .arrow img {
+  width: 2rem;
+  height: 2rem;
+}
+
+main ul li .flight-info .space {
+  -webkit-box-flex: 3;
+      -ms-flex-positive: 3;
+          flex-grow: 3;
+}
+
+main ul li .notes {
+  border-top: .1rem solid #DBDBDB;
+  padding: 10px 0 20px;
+  text-align: center;
+  font-size: .7rem;
+}
+
+main ul li .notes p {
+  margin: .2rem;
+}
+/*# sourceMappingURL=styles.css.map */
