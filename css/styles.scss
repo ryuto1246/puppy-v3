@@ -32,7 +32,7 @@ header {
 main {
   section {
     & > h1 {
-      margin: 40px 40px 15px;
+      margin: 30px 40px 15px;
       padding-bottom: 5px;
       border-bottom: 1px solid $black;
       font-size: 18px;
@@ -133,6 +133,30 @@ main {
             }
           }
         }
+      }
+    }
+    &#info {
+      position: relative;
+      border-bottom: 5px solid #18D1E0;
+      padding: 10px 0;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 15px;
+        width: 30px;
+        height: 30px;
+        margin: auto;
+        background-image: url("../imgs/info-circle.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      p {
+        font-size: 10px;
+        line-height: 1.8;
+        margin-left: 60px;
+        margin-right: 30px;
       }
     }
   }
