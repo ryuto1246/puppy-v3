@@ -135,14 +135,51 @@ main section a.twitter::after {
 
 main section ul {
   padding: 0;
+  list-style: none;
 }
 
-main section ul#flights-list li {
+main section ul li {
   width: 90vw;
   margin: 15px auto;
   -webkit-box-shadow: 0 0 6px #00000050;
           box-shadow: 0 0 6px #00000050;
-  list-style: none;
+}
+
+main section ul.list-with-img li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main section ul.list-with-img li img {
+  width: 100px;
+  height: 100px;
+}
+
+main section ul.list-with-img li div {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  text-align: center;
+}
+
+main section ul.list-with-img li div p.name {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+main section ul.list-with-img li div p.name span {
+  font-size: 10px;
+  font-weight: 400;
+}
+
+main section ul.list-with-img li div .btn {
+  margin: 0 10px;
 }
 
 main section ul#flights-list li .flight-info {

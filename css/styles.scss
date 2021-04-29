@@ -77,13 +77,39 @@ main {
     }
     ul {
       padding: 0;
+      list-style: none;
+      li {
+        width: 90vw;
+        margin: 15px auto;
+        box-shadow: 0 0 6px #00000050;
+      }
+      &.list-with-img {
+        li {
+          display: flex;
+          align-items: center;
+          img {
+            width: 100px;
+            height: 100px;
+          }
+          div {
+            flex-grow: 1;
+            text-align: center;
+            p.name {
+              margin: 0;
+              margin-bottom: 10px;
+              font-size: 15px;
+              font-weight: 600;
+              span {
+                font-size: 10px;
+                font-weight: 400;
+              }
+            }
+            .btn { margin: 0 10px; }
+          }
+        }
+      }
       &#flights-list {
         li {
-          width: 90vw;
-          margin: 15px auto;
-          box-shadow: 0 0 6px #00000050;
-          list-style: none;
-      
           .flight-info {
             display: grid;
             grid-template-columns: 6rem 1fr 2rem 1fr;
