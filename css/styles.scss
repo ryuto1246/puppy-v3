@@ -161,3 +161,41 @@ main {
     }
   }
 }
+
+footer {
+  margin-top: 40px;
+  padding: 30px 40px;
+  background: $black;
+  color: #fff;
+  p {
+    margin-top: 30px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  ul {
+    padding: 0;
+    list-style: none;
+    margin-bottom: 30px;
+    li {
+      position: relative;
+      padding: 8px 15px;
+      border-top: 1px solid #ffffffaa;
+      a {color: #fff; text-decoration: none; }
+      &:last-of-type { border-bottom: 1px solid #ffffffaa; }
+      &::after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 5px;
+        margin: auto;
+        content: "";
+        display: block;
+        width: 18px;
+        height: 18px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: url("../imgs/right-white.svg");
+      }
+    }
+  }
+}
