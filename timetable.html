@@ -8,31 +8,45 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
+  <header>
+    <h1>Puppy Air</h1>
+    <h2>Infinite flight virtual airline</h2>
+  </header>
   <main>
-    <ul id="list">
-      <li>
-        <div class="flight-info">
-          <div class="flight-number">PPY101</div>
-          <div class="space"></div>
-          <div class="airports">
-            <p class="airport-name">東京(羽田)</p>
-            <p class="airport-time">19:00</p>
-          </div>
-          <div class="arrow"><img src="./imgs/right.svg" alt="→"></div>
-          <div class="airports">
-            <p class="airport-name">ロンドン</p>
-            <p class="airport-time">翌04:00</p>
-          </div>
-          <div class="space"></div>
-        </div>
-        <div class="notes">
-          <p class="codeshare">Sky Connect Air コードシェア便（Puppy Air機材)</p>
-          <p class="aircraft">Boeing 777-300ER(500席) / Airbus 350-900(200席)</p>
-        </div>
-      </li>
-    </ul>
+    <section>
+      <ul id="flights-list">
+      </ul>
+    </section>
   </main>
   <script src="./js/data.js"></script>
   <script src="./js/script.js"></script>
+  <script>
+      const flights_export_arr = flights.map(flight => {
+        return `
+        <li>
+          <div class="flight-info">
+            <div class="flight-number">PPY${("000" + flight.flightNumber).slice(-3)}</div>
+            <div class="airports">
+              <p class="airport-name">${flight.depAirport.japanese}</p>
+              <p class="airport-time">${`${("00" + flight.depTime[0]).slice(-2)}:${("00" + flight.depTime[1]).slice(-2)}`}</p>
+            </div>
+            <div class="arrow"><img src="./imgs/right.svg" alt="→"></div>
+            <div class="airports">
+              <p class="airport-name">${flight.arrAirport.japanese}</p>
+              <p class="airport-time">${`${flight.arrTime[2] || ""}${("00" + flight.arrTime[0]).slice(-2)}:${("00" + flight.arrTime[1]).slice(-2)}`}</p>
+            </div>
+          </div>
+          <div class="notes">
+            ${flight.codeShare ? `<p class="codeshare">${flight.codeShare.company} コードシェア便（${flight.codeShare.aircraft}機運行)</p>` : ""}
+            <p class="aircraft">${
+              flight.aircraft.map(i => `${i.company} ${i.modelNumber} (${i.capacity}席)`).reduce((acc, item) => acc + " / " + item)
+            }</p>
+          </div>
+        </li>
+        `
+      });
+  const export_text = flights_export_arr.reduce((acc, item) => acc + item);
+  document.getElementById("flights-list").innerHTML = export_text;
+  </script>
 </body>
 </html>

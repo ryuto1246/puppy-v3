@@ -16,32 +16,124 @@
   src: url("../fonts/SourceHanSansJP-Heavy.otf") format("opentype");
 }
 
+@-webkit-keyframes loop-slide {
+  from {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  to {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+}
+
+@keyframes loop-slide {
+  from {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  to {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+}
+
 html {
-  font-size: 3.7vw;
+  font-size: 12px;
 }
 
 body {
+  margin: 0;
   font-family: "Source Han Sans JP", sans-serif;
 }
 
-main {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+header {
+  padding: 10px;
+  background-color: #0a111b;
+  background-size: cover;
+  background-image: url(../imgs/bg.jpg);
+  text-align: center;
+  color: #fff;
 }
 
-main ul {
+header h1 {
+  margin: 0;
+  font-size: 25px;
+  letter-spacing: 1px;
+}
+
+header h2 {
+  margin: 10px 0 5px;
+  font-size: 10px;
+  letter-spacing: .8px;
+}
+
+main section > h1 {
+  margin: 20px 40px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #444;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+main section p {
+  margin: 0 50px;
+  line-height: 2;
+}
+
+main section a {
+  display: block;
+  position: relative;
+  margin: 10px 50px;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+main section a::after, main section a::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  content: "";
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+main section a::before {
+  left: 13px;
+}
+
+main section a::after {
+  right: 5px;
+  background-image: url("../imgs/right.svg");
+}
+
+main section a.twitter {
+  border: 0;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background: #4199FC;
+}
+
+main section a.twitter::before {
+  background-image: url("../imgs/twitter.svg");
+}
+
+main section a.twitter::after {
+  background-image: url("../imgs/right-white.svg");
+}
+
+main section ul {
   padding: 0;
 }
 
-main ul li {
+main section ul#flights-list li {
   width: 90vw;
   margin: 15px auto;
   -webkit-box-shadow: 0 0 6px #00000050;
@@ -49,14 +141,14 @@ main ul li {
   list-style: none;
 }
 
-main ul li .flight-info {
+main section ul#flights-list li .flight-info {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 6rem 1fr 2rem 1fr;
       grid-template-columns: 6rem 1fr 2rem 1fr;
 }
 
-main ul li .flight-info .flight-number {
+main section ul#flights-list li .flight-info .flight-number {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -70,26 +162,26 @@ main ul li .flight-info .flight-number {
   font-size: .8rem;
 }
 
-main ul li .flight-info .airports {
+main section ul#flights-list li .flight-info .airports {
   padding: 1rem 0;
 }
 
-main ul li .flight-info .airports p {
+main section ul#flights-list li .flight-info .airports p {
   margin: 0;
   text-align: center;
 }
 
-main ul li .flight-info .airports p.airport-name {
+main section ul#flights-list li .flight-info .airports p.airport-name {
   font-weight: 800;
   font-size: 1rem;
 }
 
-main ul li .flight-info .airports p.airport-time {
+main section ul#flights-list li .flight-info .airports p.airport-time {
   font-weight: 200;
   font-size: .8rem;
 }
 
-main ul li .flight-info .arrow {
+main section ul#flights-list li .flight-info .arrow {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -98,29 +190,29 @@ main ul li .flight-info .arrow {
           align-items: center;
 }
 
-main ul li .flight-info .arrow img {
+main section ul#flights-list li .flight-info .arrow img {
   width: 2rem;
   height: 2rem;
 }
 
-main ul li .flight-info .space {
+main section ul#flights-list li .flight-info .space {
   -webkit-box-flex: 3;
       -ms-flex-positive: 3;
           flex-grow: 3;
 }
 
-main ul li .notes {
+main section ul#flights-list li .notes {
   border-top: .1rem solid #DBDBDB;
   padding: 10px 0 13px;
   text-align: center;
   font-size: .7rem;
 }
 
-main ul li .notes p {
+main section ul#flights-list li .notes p {
   margin: .2rem;
 }
 
-main ul li .notes p.codeshare {
+main section ul#flights-list li .notes p.codeshare {
   font-weight: 600;
 }
 /*# sourceMappingURL=styles.css.map */
