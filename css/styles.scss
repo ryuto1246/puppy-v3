@@ -84,6 +84,9 @@ main {
         box-shadow: 0 0 6px #00000050;
       }
       &.list-with-img {
+        &#aircrafts-list li img {
+          width: 150px;
+        }
         li {
           display: flex;
           align-items: center;

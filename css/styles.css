@@ -145,6 +145,10 @@ main section ul li {
           box-shadow: 0 0 6px #00000050;
 }
 
+main section ul.list-with-img#aircrafts-list li img {
+  width: 150px;
+}
+
 main section ul.list-with-img li {
   display: -webkit-box;
   display: -ms-flexbox;

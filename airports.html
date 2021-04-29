@@ -17,8 +17,8 @@
       <p>弊社はシミュレーションゲーム「Infinite Flight」内の架空航空会社であり、記載されている内容は全て架空のものです。</p>
     </section>
     <section>
-      <h1>所有機材一覧</h1>
-      <ul class="list-with-img" id="aircrafts-list"></ul>
+      <h1>就航空港一覧</h1>
+      <ul class="list-with-img" id="airports-list"></ul>
     </section>
   </main>
   <footer>
@@ -42,11 +42,12 @@
   <script src="./js/data.js"></script>
   <script src="./js/script.js"></script>
   <script>
-    document.getElementById("aircrafts-list").innerHTML = aircrafts.map(aircraft => `
+    document.getElementById("airports-list").innerHTML = airports.map(airport => `
       <li>
-        <img src="./imgs/aircrafts/${aircraft.abbreviation}.jpg">
+        <img src="./imgs/airports/${airport.icao}.jpg">
         <div>
-          <p class="name">${aircraft.company} ${aircraft.modelNumber}</p>
+          <p class="name">${airport.japanese}</p>
+          <p>[${airport.nation}]</p>
         </div>
       </li>
       `
