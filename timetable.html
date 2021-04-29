@@ -16,18 +16,18 @@
     <section id="info">
       <p>弊社はシミュレーションゲーム「Infinite Flight」内の架空航空会社であり、記載されている内容は全て架空のものです。</p>
     </section>
-   <section>
-    <form>
-      <label for="form-airports">発着空港</label>
-      <select name="airport" id="form-airports">
-        <option value="noFilter" selected>絞り込まない</option>
-      </select>
-      <label for="form-aircrafts">使用機材</label>
-      <select name="aircraft" id="form-aircrafts">
-        <option value="noFilter" selected>絞り込まない</option>
-      </select>
-    </form>
-   </section>
+    <section>
+      <form>
+        <label for="form-airports">発着空港</label>
+        <select name="airport" id="form-airports">
+          <option value="noFilter" selected>絞り込まない</option>
+        </select>
+        <label for="form-aircrafts">使用機材</label>
+        <select name="aircraft" id="form-aircrafts">
+          <option value="noFilter" selected>絞り込まない</option>
+        </select>
+      </form>
+    </section>
     <section>
       <ul id="flights-list"></ul>
     </section>
@@ -60,7 +60,7 @@
       if(aircraftName === "noFilter") return flights;
       return flights.filter(flight => flight.aircraft.find(el => el.abbreviation === aircraftName));
     }
-
+   
     const showFlights = (flights => {
       const filteredFlights = filterByAircraft(filterByAirport(flights, document.getElementById("form-airports").value), document.getElementById("form-aircrafts").value);
       document.getElementById("flights-list").innerHTML = filteredFlights.map(flight => `
@@ -80,7 +80,7 @@
         <div class="notes">
           ${flight.codeShare ? `<p class="codeshare">${flight.codeShare.company} コードシェア便（${flight.codeShare.aircraft}機運行)</p>` : ""}
           <p class="aircraft">${
-            flight.aircraft.map(i => `${i.company} ${i.modelNumber} (${i.capacity}席)`).reduce((acc, item) => acc + " / " + item)
+            flight.aircraft.map(item => `${item.company} ${item.modelNumber} (${item.capacity}席)`).reduce((acc, item) => acc + " / " + item)
           }</p>
           ${flight.cycle.c!==1 ? `<p>DAY ${p.n+1}/${p.c}</p>` : ""}
         </div>
@@ -99,6 +99,6 @@
 
     document.getElementById("form-aircrafts").addEventListener("change", () => {showFlights(flights)});
     document.getElementById("form-airports").addEventListener("change", () => {showFlights(flights)});
-    </script>
+  </script>
 </body>
 </html>
