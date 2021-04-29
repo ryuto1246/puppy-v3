@@ -9,13 +9,25 @@
 </head>
 <body>
   <header>
-    <h1>Puppy Air</h1>
-    <h2>Infinite flight virtual airline</h2>
+    <h1><a href="./index.html">Puppy Air</a></h1>
+    <h2><a href="./index.html">Infinite flight virtual airline</a></h2>
   </header>
   <main>
     <section id="info">
       <p>弊社はシミュレーションゲーム「Infinite Flight」内の架空航空会社であり、記載されている内容は全て架空のものです。</p>
     </section>
+   <section>
+    <form>
+      <label for="form-airports">発着空港</label>
+      <select name="airport" id="form-airports">
+        <option value="noFilter" selected>絞り込まない</option>
+      </select>
+      <label for="form-aircrafts">使用機材</label>
+      <select name="aircraft" id="form-aircrafts">
+        <option value="noFilter" selected>絞り込まない</option>
+      </select>
+    </form>
+   </section>
     <section>
       <ul id="flights-list"></ul>
     </section>
@@ -41,32 +53,53 @@
   <script src="./js/data.js"></script>
   <script src="./js/script.js"></script>
   <script>
-      const flights_export_arr = flights.map(flight => {
-        return `
-        <li>
-          <div class="flight-info">
-            <div class="flight-number">PPY${("000" + flight.flightNumber).slice(-3)}</div>
-            <div class="airports">
-              <p class="airport-name">${flight.depAirport.japanese}</p>
-              <p class="airport-time">${`${("00" + flight.depTime[0]).slice(-2)}:${("00" + flight.depTime[1]).slice(-2)}`}</p>
-            </div>
-            <div class="arrow"><img src="./imgs/right.svg" alt="→"></div>
-            <div class="airports">
-              <p class="airport-name">${flight.arrAirport.japanese}</p>
-              <p class="airport-time">${`${flight.arrTime[2] || ""}${("00" + flight.arrTime[0]).slice(-2)}:${("00" + flight.arrTime[1]).slice(-2)}`}</p>
-            </div>
+    const filterByAirport = (flights, airportName) => {
+      if(airportName === "noFilter") return flights;
+      return flights.filter(flight => flight.arrAirport.icao === airportName || flight.depAirport.icao === airportName );
+    }
+    const filterByAircraft = (flights, aircraftName) => {
+      if(aircraftName === "noFilter") return flights;
+      return flights.filter(flight => flight.aircraft.find(el => el.abbreviation === aircraftName));
+    }
+
+    const showFlights = (flights => {
+      const filteredFlights = filterByAircraft(filterByAirport(flights, document.getElementById("form-airports").value), document.getElementById("form-aircrafts").value);
+      document.getElementById("flights-list").innerHTML = filteredFlights.map(flight => `
+      <li>
+        <div class="flight-info">
+          <div class="flight-number">PPY${("000" + flight.flightNumber).slice(-3)}</div>
+          <div class="airports">
+            <p class="airport-name">${flight.depAirport.japanese}</p>
+            <p class="airport-time">${`${("00" + flight.depTime[0]).slice(-2)}:${("00" + flight.depTime[1]).slice(-2)}`}</p>
           </div>
-          <div class="notes">
-            ${flight.codeShare ? `<p class="codeshare">${flight.codeShare.company} コードシェア便（${flight.codeShare.aircraft}機運行)</p>` : ""}
-            <p class="aircraft">${
-              flight.aircraft.map(i => `${i.company} ${i.modelNumber} (${i.capacity}席)`).reduce((acc, item) => acc + " / " + item)
-            }</p>
+          <div class="arrow"><img src="./imgs/right.svg" alt="→"></div>
+          <div class="airports">
+            <p class="airport-name">${flight.arrAirport.japanese}</p>
+            <p class="airport-time">${`${flight.arrTime[2] || ""}${("00" + flight.arrTime[0]).slice(-2)}:${("00" + flight.arrTime[1]).slice(-2)}`}</p>
           </div>
-        </li>
-        `
-      });
-  const export_text = flights_export_arr.reduce((acc, item) => acc + item);
-  document.getElementById("flights-list").innerHTML = export_text;
-  </script>
+        </div>
+        <div class="notes">
+          ${flight.codeShare ? `<p class="codeshare">${flight.codeShare.company} コードシェア便（${flight.codeShare.aircraft}機運行)</p>` : ""}
+          <p class="aircraft">${
+            flight.aircraft.map(i => `${i.company} ${i.modelNumber} (${i.capacity}席)`).reduce((acc, item) => acc + " / " + item)
+          }</p>
+          ${flight.cycle.c!==1 ? `<p>DAY ${p.n+1}/${p.c}</p>` : ""}
+        </div>
+      </li>
+      `
+    ).reduce((acc, item) => acc + item);
+    });
+
+    showFlights(flights);
+    document.getElementById("form-airports").innerHTML += airports.map(airport => `
+      <option value="${airport.icao}">${airport.japanese}</option>
+    `).reduce((acc, item)=> acc + item);
+    document.getElementById("form-aircrafts").innerHTML += aircrafts.map(aircraft => `
+      <option value="${aircraft.abbreviation}">${aircraft.company + " " + aircraft.modelNumber}</option>
+    `).reduce((acc, item)=> acc + item);
+
+    document.getElementById("form-aircrafts").addEventListener("change", () => {showFlights(flights)});
+    document.getElementById("form-airports").addEventListener("change", () => {showFlights(flights)});
+    </script>
 </body>
 </html>

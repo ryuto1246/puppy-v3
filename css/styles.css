@@ -53,7 +53,6 @@ header {
   background-size: cover;
   background-image: url(../imgs/bg.jpg);
   text-align: center;
-  color: #fff;
 }
 
 header h1 {
@@ -66,6 +65,11 @@ header h2 {
   margin: 10px 0 5px;
   font-size: 10px;
   letter-spacing: .8px;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
 }
 
 main section > h1 {
@@ -241,6 +245,28 @@ main section#info p {
   line-height: 1.8;
   margin-left: 60px;
   margin-right: 30px;
+}
+
+main section form {
+  margin-bottom: 10px;
+}
+
+main section form label {
+  display: block;
+  width: 80%;
+  margin: 10px auto 5px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+main section form select {
+  display: block;
+  width: 80%;
+  margin: 0 auto 20px;
+  padding: 10px 5px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background: #fff;
 }
 
 footer {
