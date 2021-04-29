@@ -157,6 +157,8 @@ main section ul.list-with-img li {
 main section ul.list-with-img li img {
   width: 100px;
   height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 main section ul.list-with-img li div {
