@@ -78,6 +78,7 @@ main {
     ul {
       padding: 0;
       list-style: none;
+      & > p { text-align: center; margin-bottom: 0;}
       li {
         width: 90vw;
         margin: 15px auto;
@@ -206,13 +207,34 @@ main {
         border-radius: 5px;
         background: #fff;
       }
-      margin-bottom: 10px;
+      .radio-container {
+        display: flex;
+        justify-content: center;
+        margin: 0 30px;
+        input[type="radio"]{ display: none; }
+        label {
+          box-sizing: border-box;
+          width: 50%;
+          padding: 7px;
+          border: 2px solid $black;
+          font-size: 10px;
+          text-align: center;
+          cursor: pointer;
+          &:first-of-type { border-radius: 8px 0 0 8px; }
+          &:last-of-type { border-radius: 0 8px 8px 0;  margin-left: -2px;}
+        }
+        input:checked + label {
+          background: $black;
+          color: #fff;
+        }
+      }
+      margin-bottom: 25px;
     }
   }
 }
 
 footer {
-  margin-top: 40px;
+  margin-top: 30px;
   padding: 30px 40px;
   background: $black;
   color: #fff;

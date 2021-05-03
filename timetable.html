@@ -26,6 +26,12 @@
         <select name="aircraft" id="form-aircrafts">
           <option value="noFilter" selected>絞り込まない</option>
         </select>
+        <div id="sort-type" class="radio-container">
+          <input type="radio" name="sort-type" value="depTime" id="depTime" selected>
+          <label for="depTime">出発時刻で並べ替え</label>
+          <input type="radio" name="sort-type" value="arrTime" id="arrTime">
+          <label for="arrTime">到着時刻で並べ替え</label>
+        </div>
       </form>
     </section>
     <section>
@@ -60,9 +66,30 @@
       if(aircraftName === "noFilter") return flights;
       return flights.filter(flight => flight.aircraft.find(el => el.abbreviation === aircraftName));
     }
+    const sortByTime = (flights, criteria) => {
+      return  flights.sort((e1, e2) => {
+                if (document.forms[0].elements["sort-type"].value === "depTime") {
+                  var [t1, t2] = [e1.depTime[0]*100+e1.depTime[1], e2.depTime[0]*100+e2.depTime[1]];
+                  if (t1 < criteria) t1 += 2400;
+                  if (t2 < criteria) t2 += 2400;
+                } else {
+                  var [t1, t2] = [e1.arrTime[0]*100+e1.arrTime[1], e2.arrTime[0]*100+e2.arrTime[1]];
+                }
+
+                if (t1 < t2) return -1;
+                if (t1 > t2) return 1;
+                return 0;
+              });
+    }
    
     const showFlights = (flights => {
-      const filteredFlights = filterByAircraft(filterByAirport(flights, document.getElementById("form-airports").value), document.getElementById("form-aircrafts").value);
+      let filteredFlights = sortByTime(flights, new Date().getHours() * 100 + new Date().getMinutes());
+      filteredFlights = filterByAirport(filteredFlights, document.getElementById("form-airports").value);
+      filteredFlights = filterByAircraft(filteredFlights, document.getElementById("form-aircrafts").value);
+      if (filteredFlights.length === 0) {
+        document.getElementById("flights-list").innerHTML = "<p>あてはまるフライトはありません</p>"
+        return;
+      }
       document.getElementById("flights-list").innerHTML = filteredFlights.map(flight => `
       <li>
         <div class="flight-info">
@@ -79,10 +106,10 @@
         </div>
         <div class="notes">
           ${flight.codeShare ? `<p class="codeshare">${flight.codeShare.company} コードシェア便（${flight.codeShare.aircraft}機運行)</p>` : ""}
-          <p class="aircraft">${
-            flight.aircraft.map(item => `${item.company} ${item.modelNumber} (${item.capacity}席)`).reduce((acc, item) => acc + " / " + item)
-          }</p>
-          ${flight.cycle.c!==1 ? `<p>DAY ${p.n+1}/${p.c}</p>` : ""}
+          <p class="aircraft">
+            ${ flight.aircraft.length ? flight.aircraft.map(item => `${item.company} ${item.modelNumber} ${ flight.aircraftNumber ? `[${flight.aircraftNumber[0]}]` : "" }(${item.capacity}席)`).reduce((acc, item) => acc + " / " + item) : "" }
+          </p>
+          ${flight.cycle.c!==1 ? `<p>DAY ${flight.cycle.n+1}/${flight.cycle.c}</p>` : ""}
         </div>
       </li>
       `
@@ -99,6 +126,7 @@
 
     document.getElementById("form-aircrafts").addEventListener("change", () => {showFlights(flights)});
     document.getElementById("form-airports").addEventListener("change", () => {showFlights(flights)});
+    document.getElementById("sort-type").addEventListener("change", () => {showFlights(flights)});
   </script>
 </body>
 </html>

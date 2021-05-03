@@ -25,6 +25,7 @@ class Flight {
     this.depTime = input.Dep_time.split(":").map(i => parseInt(i, 10));
     this.arrTime = input.Arr_time.split(":").map(i => parseInt(i, 10));
     this.aircraft = [input.Aircraft_1, input.Aircraft_2, input.Aircraft_3].filter(Boolean).map(el => aircrafts.find(aircraft => aircraft.abbreviation === el));
+    if(input.Aircraft_Number_1) this.aircraftNumber = [input.Aircraft_Number_1];
     this.cycle = {c: input.Cycle||1, n: input.Number-1||0};
     if(input.Codeshare_company) this.codeShare = {company: input.Codeshare_company, number: input.Codeshare_number, aircraft: input.Codeshare_Aircraft};
     if(input.indirect) this.indirect = input.indirect;
