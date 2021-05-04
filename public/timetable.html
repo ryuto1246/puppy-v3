@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>時刻表 - PuppyAir</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <header>
+    <h1><a href="./index.html">Puppy Air</a></h1>
+    <h2><a href="./index.html">Infinite flight virtual airline</a></h2>
+  </header>
+  <main>
+    <section id="info">
+      <p>弊社はシミュレーションゲーム「Infinite Flight」内の架空航空会社であり、記載されている内容は全て架空のものです。</p>
+    </section>
+    <section>
+      <form>
+        <label for="form-airports">発着空港</label>
+        <select name="airport" id="form-airports">
+          <option value="noFilter" selected>絞り込まない</option>
+        </select>
+        <label for="form-aircrafts">使用機材</label>
+        <select name="aircraft" id="form-aircrafts">
+          <option value="noFilter" selected>絞り込まない</option>
+        </select>
+        <div id="sort-type" class="radio-container">
+          <input type="radio" name="sort-type" value="depTime" id="depTime" checked>
+          <label for="depTime">出発時刻で並べ替え</label>
+          <input type="radio" name="sort-type" value="arrTime" id="arrTime">
+          <label for="arrTime">到着時刻で並べ替え</label>
+        </div>
+      </form>
+    </section>
+    <section>
+      <ul id="flights-list"></ul>
+    </section>
+  </main>
+  <footer>
+    <div>
+      <p>Puppy Airについて</p>
+      <ul>
+        <li><a href="./index.html">トップページ</a></li>
+        <li><a href="./timetable.html">時刻表</a></li>
+        <li><a href="https://twitter.com/PUPPYAirVA1">公式Twitter</a></li>
+      </ul>
+    </div>
+    <div>
+      <p>当サイトについて</p>
+      <ul>
+        <li><a href="./trouble.html">当サイトに不具合があった場合</a></li>
+        <li><a href="https://twitter.com/ryuto1246">サイト制作者</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="./js/data.js"></script>
+  <script src="./js/script.js"></script>
+  <script>
+    const filterByAirport = (flights, airportName) => {
+      if(airportName === "noFilter") return flights;
+      return flights.filter(flight => flight.arrAirport.icao === airportName || flight.depAirport.icao === airportName );
+    }
+    const filterByAircraft = (flights, aircraftName) => {
+      if(aircraftName === "noFilter") return flights;
+      return flights.filter(flight => flight.aircraft.find(el => el.abbreviation === aircraftName));
+    }
+    const sortByTime = (flights, criteria) => {
+      return  flights.sort((e1, e2) => {
+                if (document.forms[0].elements["sort-type"].value === "depTime") {
+                  var [t1, t2] = [e1.depTime[0]*100+e1.depTime[1], e2.depTime[0]*100+e2.depTime[1]];
+                  if (t1 < criteria) t1 += 2400;
+                  if (t2 < criteria) t2 += 2400;
+                } else {
+                  var [t1, t2] = [e1.arrTime[0]*100+e1.arrTime[1], e2.arrTime[0]*100+e2.arrTime[1]];
+                }
+
+                if (t1 < t2) return -1;
+                if (t1 > t2) return 1;
+                return 0;
+              });
+    }
+   
+    const showFlights = (flights => {
+      let filteredFlights = sortByTime(flights, new Date().getHours() * 100 + new Date().getMinutes());
+      filteredFlights = filterByAirport(filteredFlights, document.getElementById("form-airports").value);
+      filteredFlights = filterByAircraft(filteredFlights, document.getElementById("form-aircrafts").value);
+      if (filteredFlights.length === 0) {
+        document.getElementById("flights-list").innerHTML = "<p>あてはまるフライトはありません</p>"
+        return;
+      }
+      document.getElementById("flights-list").innerHTML = filteredFlights.map(flight => `
+      <li>
+        <div class="flight-info">
+          <div class="flight-number">PPY${("000" + flight.flightNumber).slice(-3)}</div>
+          <div class="airports">
+            <p class="airport-name">${flight.depAirport.japanese}</p>
+            <p class="airport-time">${`${("00" + flight.depTime[0]).slice(-2)}:${("00" + flight.depTime[1]).slice(-2)}`}</p>
+          </div>
+          <div class="arrow"><img src="./imgs/right.svg" alt="→"></div>
+          <div class="airports">
+            <p class="airport-name">${flight.arrAirport.japanese}</p>
+            <p class="airport-time">${`${flight.arrTime[2] || ""}${("00" + flight.arrTime[0]).slice(-2)}:${("00" + flight.arrTime[1]).slice(-2)}`}</p>
+          </div>
+        </div>
+        <div class="notes">
+          ${flight.codeShare ? `<p class="codeshare">${flight.codeShare.company} コードシェア便（${flight.codeShare.aircraft}機運行)</p>` : ""}
+          <p class="aircraft">
+            ${ flight.aircraft.length ? flight.aircraft.map(item => `${item.company} ${item.modelNumber} ${ flight.aircraftNumber ? `[${flight.aircraftNumber[0]}]` : "" }(${item.capacity}席)`).reduce((acc, item) => acc + " / " + item) : "" }
+          </p>
+          ${flight.cycle.c!==1 ? `<p>DAY ${flight.cycle.n+1}/${flight.cycle.c}</p>` : ""}
+        </div>
+      </li>
+      `
+    ).reduce((acc, item) => acc + item);
+    });
+
+    showFlights(flights);
+    document.getElementById("form-airports").innerHTML += airports.map(airport => `
+      <option value="${airport.icao}">${airport.japanese}</option>
+    `).reduce((acc, item)=> acc + item);
+    document.getElementById("form-aircrafts").innerHTML += aircrafts.map(aircraft => `
+      <option value="${aircraft.abbreviation}">${aircraft.company + " " + aircraft.modelNumber}</option>
+    `).reduce((acc, item)=> acc + item);
+
+    document.getElementById("form-aircrafts").addEventListener("change", () => {showFlights(flights)});
+    document.getElementById("form-airports").addEventListener("change", () => {showFlights(flights)});
+    document.getElementById("sort-type").addEventListener("change", () => {showFlights(flights)});
+  </script>
+</body>
+</html>
